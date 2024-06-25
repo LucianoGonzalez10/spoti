@@ -1,0 +1,39 @@
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #0d9696;
+        }
+        #buscar {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #0d9696;
+            color: white;
+            border: none;
+            margin-left: 10px;
+        }
+        #resultados {
+            margin-top: 20px;
+        }
+        .cancion {
+            background-color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .cancion p {
+            margin: 0;
+        }
