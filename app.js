@@ -1,6 +1,6 @@
 const clientId = '649514248a3c4b928d6d6e880206e1db';
 const clientSecret = '8b861e27912343a892db9f9aa55c8a76'; 
-const redirectUri = 'http://127.0.0.1:5500/buscador.html?code=AQD9uEkalLBJWuXTwW-0bSTiqLFrnwGMi-QYQtlQfPLb3wk3rU6z7Hh8EHe4HyXtx592DMHMwk5Vgt7yv3gG2_UUQxzSPG302w1C77RSrJGrHw1PDdxhkWVqRFM6hzpqMvwojfB_j3P1WuKbis6hAM50wlD4DUAVG6RenCEXIWVfBojoFugz5FiVI0v_0pUel0YfJ4_yZnEHeoAL2I5iRGLvgJIjOM6as_LvlRMzcAutnmgwXjOmhV0WsOpsXExHXahaWf9N';
+const redirectUri = 'https://LucianoGonzalez10.github.io/spoti/#buscador';
 const scopes = 'playlist-read-private playlist-modify-public user-library-read';
 
 let accessToken = null;
