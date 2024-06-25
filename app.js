@@ -3,8 +3,6 @@ const clientSecret = '8b861e27912343a892db9f9aa55c8a76';
 const redirectUri = 'https://lucianogonzalez10.github.io/spoti/buscador';
 const scopes = 'playlist-read-private playlist-modify-public user-library-read';
 
-let accessToken = null;
-
 function iniciarSesionSpotify() {
     const url = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}`;
     window.location.href = url;
@@ -21,18 +19,24 @@ async function obtenerToken(codigoAutorizacion) {
     });
 
     const data = await response.json();
-    accessToken = data.access_token; 
-    setTimeout(() => { accessToken = null; }, data.expires_in * 1000); 
-    return accessToken;
+    sessionStorage.setItem('accessToken', data.access_token);
+    setTimeout(() => { sessionStorage.removeItem('accessToken'); }, data.expires_in * 1000);
+    return data.access_token;
 }
 
 async function buscarCanciones() {
     const query = document.getElementById('buscar').value;
 
+    let accessToken = sessionStorage.getItem('accessToken');
     if (!accessToken) {
         const urlParams = new URLSearchParams(window.location.search);
         const codigoAutorizacion = urlParams.get('code');
-        await obtenerToken(codigoAutorizacion);
+        if (codigoAutorizacion) {
+            accessToken = await obtenerToken(codigoAutorizacion);
+        } else {
+            iniciarSesionSpotify();
+            return;
+        }
     }
 
     try {
@@ -72,4 +76,13 @@ function reproducirCancion(id) {
     player.frameBorder = '0';
     player.allow = 'encrypted-media';
     document.body.appendChild(player);
+}
+
+// Verificar si hay un código de autorización en la URL al cargar la página
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const codigoAutorizacion = urlParams.get('code');
+    if (codigoAutorizacion && !sessionStorage.getItem('accessToken')) {
+        obtenerToken(codigoAutorizacion);
+    }
 }
