@@ -1,6 +1,6 @@
 const clientId = '649514248a3c4b928d6d6e880206e1db';
 const clientSecret = '8b861e27912343a892db9f9aa55c8a76'; 
-const redirectUri = 'http://127.0.0.1:5500/index.html';
+const redirectUri = 'http://127.0.0.1:5500/buscador.html?code=AQCAl8HhBUMGN9BTITMnb5wSN9XLi7I2tJLHRz1nuBFIueoVZyTOmBhVB0dqLFfpw1zxbrVR_1EwphNZT7cKEUYxOjc0KLjTEnTNr_A-ISg0CU3n7c9fQMKVpSdvtqYBIgnl-sAXTTWQtIVFG4hOSxOFE4JK4J5sC5HiSHWpHguUCPi0RK8_b2gBhQ9YjJj0DrvvlpmI6tF8WtiPp19Y8B1HNzgSymH0hjhbhyep3k8xh4jeU34n8hcHCNg0lY1wFm0ppDCI';
 const scopes = 'playlist-read-private playlist-modify-public user-library-read';
 
 let accessToken = null;
