@@ -99,10 +99,8 @@ function reproducirCancion(id) {
 
 function cerrarSesionSpotify() {
     sessionStorage.removeItem('accessToken');
-    iniciarSesionSpotify();
+    window.location.href = window.location.pathname; // Recargar la página sin parámetros
 }
-const botonCerrar = document.getElementById('cerrarSesion');
-botonCerrar.addEventListener('click', cerrarSesionSpotify());
 
 // Verificar si hay un código de autorización en la URL al cargar la página
 window.onload = async function() {
