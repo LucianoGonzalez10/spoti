@@ -102,7 +102,7 @@ function cerrarSesionSpotify() {
     iniciarSesionSpotify();
 }
 const botonCerrar = document.getElementById('cerrarSesion');
-botonCerrar.addEventListener('click', cerrarSesionSpotify);
+botonCerrar.addEventListener('click', cerrarSesionSpotify());
 
 // Verificar si hay un código de autorización en la URL al cargar la página
 window.onload = async function() {
