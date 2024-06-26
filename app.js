@@ -19,9 +19,14 @@ async function obtenerToken(codigoAutorizacion) {
     });
 
     const data = await response.json();
-    sessionStorage.setItem('accessToken', data.access_token);
-    setTimeout(() => { sessionStorage.removeItem('accessToken'); }, data.expires_in * 1000);
-    return data.access_token;
+    if (data.access_token) {
+        sessionStorage.setItem('accessToken', data.access_token);
+        setTimeout(() => { sessionStorage.removeItem('accessToken'); }, data.expires_in * 1000);
+        return data.access_token;
+    } else {
+        console.error('Error al obtener el token:', data);
+        return null;
+    }
 }
 
 async function buscarCanciones() {
@@ -37,6 +42,11 @@ async function buscarCanciones() {
             iniciarSesionSpotify();
             return;
         }
+    }
+
+    if (!accessToken) {
+        console.error('No se pudo obtener el token de acceso.');
+        return;
     }
 
     try {
@@ -79,10 +89,14 @@ function reproducirCancion(id) {
 }
 
 // Verificar si hay un código de autorización en la URL al cargar la página
-window.onload = function() {
+window.onload = async function() {
     const urlParams = new URLSearchParams(window.location.search);
     const codigoAutorizacion = urlParams.get('code');
     if (codigoAutorizacion && !sessionStorage.getItem('accessToken')) {
-        obtenerToken(codigoAutorizacion);
+        const accessToken = await obtenerToken(codigoAutorizacion);
+        if (accessToken) {
+            // Remove the authorization code from the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
     }
 }
