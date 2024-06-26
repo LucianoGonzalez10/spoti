@@ -97,11 +97,6 @@ function reproducirCancion(id) {
     document.body.appendChild(player);
 }
 
-function cerrarSesionSpotify() {
-    sessionStorage.removeItem('accessToken');
-    window.location.href = window.location.pathname; // Recargar la página sin parámetros
-}
-
 // Verificar si hay un código de autorización en la URL al cargar la página
 window.onload = async function() {
     const urlParams = new URLSearchParams(window.location.search);
