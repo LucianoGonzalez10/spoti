@@ -9,22 +9,27 @@ function iniciarSesionSpotify() {
 }
 
 async function obtenerToken(codigoAutorizacion) {
-    const response = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
-        },
-        body: `grant_type=authorization_code&code=${codigoAutorizacion}&redirect_uri=${encodeURIComponent(redirectUri)}`
-    });
+    try {
+        const response = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
+            },
+            body: `grant_type=authorization_code&code=${codigoAutorizacion}&redirect_uri=${encodeURIComponent(redirectUri)}`
+        });
 
-    const data = await response.json();
-    if (data.access_token) {
-        sessionStorage.setItem('accessToken', data.access_token);
-        setTimeout(() => { sessionStorage.removeItem('accessToken'); }, data.expires_in * 1000);
-        return data.access_token;
-    } else {
-        console.error('Error al obtener el token:', data);
+        const data = await response.json();
+        if (data.access_token) {
+            sessionStorage.setItem('accessToken', data.access_token);
+            setTimeout(() => { sessionStorage.removeItem('accessToken'); }, data.expires_in * 1000);
+            return data.access_token;
+        } else {
+            console.error('Error al obtener el token:', data);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al obtener el token:', error);
         return null;
     }
 }
@@ -57,7 +62,11 @@ async function buscarCanciones() {
         });
 
         const data = await response.json();
-        mostrarResultados(data.tracks.items);
+        if (data.tracks && data.tracks.items) {
+            mostrarResultados(data.tracks.items);
+        } else {
+            console.error('Error en la búsqueda de canciones:', data);
+        }
     } catch (error) {
         console.error('Error al buscar canciones:', error);
     }
@@ -87,6 +96,13 @@ function reproducirCancion(id) {
     player.allow = 'encrypted-media';
     document.body.appendChild(player);
 }
+
+function cerrarSesionSpotify() {
+    sessionStorage.removeItem('accessToken');
+    iniciarSesionSpotify();
+}
+const botonCerrar = document.getElementById('cerrarSesion');
+botonCerrar.addEventListener('click', cerrarSesionSpotify);
 
 // Verificar si hay un código de autorización en la URL al cargar la página
 window.onload = async function() {
