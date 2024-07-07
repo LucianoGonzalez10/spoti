@@ -1,6 +1,5 @@
-const clientId = '649514248a3c4b928d6d6e880206e1db';
-const clientSecret = '8b861e27912343a892db9f9aa55c8a76'; 
-const redirectUri = 'https://lucianogonzalez10.github.io/spoti/buscador';
+
+;
 const scopes = 'playlist-read-private playlist-modify-public user-library-read';
 
 function iniciarSesionSpotify() {
